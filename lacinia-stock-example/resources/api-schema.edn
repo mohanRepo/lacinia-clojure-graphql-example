@@ -1,0 +1,87 @@
+{
+ :interfaces {
+              :StockEntity {:description "entity representing an stock main field"
+                            :fields      {:ric {:type        (non-null String)
+                                                :description "ric code for an stock"}}}}
+
+
+
+ :input-objects {
+                :stock     {:description "Spot price of Stock"
+                                 :fields      {:ric        {:type (non-null String)}
+                                               :price      {:type (non-null :StockPrice)}
+                                               :lastTraded {:type String}}}
+                }
+ :objects    {
+
+              :stockQuote     {:description "Spot price of Stock"
+                               :fields      {:ric        {:type (non-null String)}
+                                             :price      {:type (non-null :StockPrice)}
+                                             :lastTraded {:type String}}}
+
+              :companyProfile {:description "Company Profile info"
+                               :implements  [:StockEntity]
+                               :fields      {:ric  {:type (non-null String)}
+                                             :name {:type (non-null String)}
+                                             :description {:type String}
+                                             :boardMembers {:type (list String)}}}
+              :stockDetail {:description "Stock Details"
+                            :implements [:StockEntity]
+                            :fields {:ric {:type (non-null String)}
+                                     :name {:type (non-null String)}
+                                     :description {:type String}
+                                     :company {:type :companyProfile
+                                               :resolve :get-company-info}
+                                     }
+
+                            }
+              }
+
+ :scalars
+ {:StockPrice {:parse :dollar->number
+               :serialize :number->dollar}
+  }
+
+
+
+ :mutations
+             {:AddNewStock
+              {:resolve :add-new-stock
+               :type :stockDetail
+               :args {:stock {:type :stock}}}
+
+            }
+
+ :queries
+             {:hello
+              {:type    String
+               :resolve :resolve-hello}
+
+              :getAllStockQuotes
+               {:type    (list :stockQuote)
+                :resolve :get-all-stock-quotes}
+
+              :GetStockDetail
+              {:resolve :get-stock-detail
+               :type :stockDetail
+               :args {:ric {:type String}}}
+
+              :BulkStockDetails
+              {:resolve :resolve-rics
+               :type (list :stockDetail)
+               :args {:rics {:type (list String)}}}
+ }
+
+ :subscriptions
+             {:ping
+                          {:type   String
+                           :stream :ping-response}
+
+              :watchStock {:type        :stockQuote
+                           :description "Listens to the stocks"
+                           :args        {:ric {:type        String
+                                               :description "ric code of a stock"}}
+                           :stream      :stock-quote}
+              }
+ }
+
