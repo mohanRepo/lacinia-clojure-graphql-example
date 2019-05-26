@@ -1,4 +1,4 @@
-(ns lacinia-stock-example.StockMarketAccess
+(ns db.StockMarketAccess
   (:require
     [clojure.core.async :as async :refer [chan <! >! timeout
                                           pub sub unsub unsub-all

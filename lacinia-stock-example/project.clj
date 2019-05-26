@@ -10,4 +10,4 @@
                  [com.walmartlabs/lacinia-pedestal "0.11.0"]]
   :main ^:skip-aot lacinia-stock-example.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}} )
