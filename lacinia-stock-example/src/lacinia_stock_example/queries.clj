@@ -25,7 +25,6 @@
     (db/get-company-detail-from-db ric)
     ))
 
-
 (defn resolve-rics [context arguments value]
   (println "resolve-rics args: " arguments)
   (println "resolve-rics value: " value)
@@ -34,4 +33,4 @@
 
 (defn resolve-hello
   [context args value]
-  context)
+  "Hello World!")

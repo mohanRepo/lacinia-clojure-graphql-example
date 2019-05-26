@@ -43,7 +43,6 @@
   }
 
 
-
  :mutations
              {:AddNewStock
               {:resolve :add-new-stock
@@ -53,11 +52,7 @@
             }
 
  :queries
-             {:hello
-              {:type    String
-               :resolve :resolve-hello}
-
-              :getAllStockQuotes
+ {             :getAllStockQuotes
                {:type    (list :stockQuote)
                 :resolve :get-all-stock-quotes}
 
@@ -70,18 +65,21 @@
               {:resolve :resolve-rics
                :type (list :stockDetail)
                :args {:rics {:type (list String)}}}
- }
+
+             :hello
+             {:type    String
+              :resolve :resolve-hello}}
 
  :subscriptions
-             {:ping
-                          {:type   String
-                           :stream :ping-response}
-
-              :watchStock {:type        :stockQuote
-                           :description "Listens to the stocks"
-                           :args        {:ric {:type        String
-                                               :description "ric code of a stock"}}
-                           :stream      :stock-quote}
-              }
+ {
+  :watchStock {:type        :stockQuote
+               :description "Listens to the stocks"
+               :args        {:ric {:type        String
+                                   :description "ric code of a stock"}}
+               :stream      :stock-quote}
+  }
  }
+
+
+
 

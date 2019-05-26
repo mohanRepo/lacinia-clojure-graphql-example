@@ -26,16 +26,14 @@
                               :resolve-rics queries/resolve-rics
                               :add-new-stock mutations/add-new-stock
                               :get-all-stock-quotes queries/get-all-stock-quotes})
-      (util/attach-streamers {:ping-response subs/log-message-streamer
-                              :stock-quote subs/watch-stock})
+      (util/attach-streamers {:stock-quote subs/watch-stock})
       schema/compile))
 
-(subs/producer)
 (ma/stock-price-updater)
 
 
 (def service (-> (schema)
-                 (service-map {:graphiql true :subscriptions true})
+                 (service-map {:graphiql true :subscriptions true :port 8888})
                  http/create-server
                  http/start))
 
