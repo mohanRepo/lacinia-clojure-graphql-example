@@ -12,8 +12,7 @@
     [lacinia-stock-example.scalars :as scalars]
     [io.pedestal.http :as http]))
 
-(defn ^:private schema
-  []
+(def api-schema
   (-> "api-schema.edn"
       io/resource
       slurp
@@ -29,13 +28,16 @@
       (util/attach-streamers {:stock-quote subs/watch-stock})
       schema/compile))
 
+
 (ma/stock-price-updater)
 
 
-(def service (-> (schema)
+(def service (-> api-schema
                  (service-map {:graphiql true :subscriptions true :port 8888})
                  http/create-server
                  http/start))
+
+;; (com.walmartlabs.lacinia/execute api-schema "{hello}" nil nil)
 
 
 

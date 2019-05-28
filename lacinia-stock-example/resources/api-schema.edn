@@ -25,6 +25,8 @@
                                              :name {:type (non-null String)}
                                              :description {:type String}
                                              :boardMembers {:type (list String)}}}
+
+
               :stockDetail {:description "Stock Details"
                             :implements [:StockEntity]
                             :fields {:ric {:type (non-null String)}
