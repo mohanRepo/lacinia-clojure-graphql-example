@@ -10,7 +10,7 @@ client:
 cd ws-client  
 lein repl  
 
-***would sunscribe listen to the pub events from service
+***would subscribe and  listen to the pub/sub events from service
 
 
 
